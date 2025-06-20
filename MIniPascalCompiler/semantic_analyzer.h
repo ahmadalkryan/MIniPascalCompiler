@@ -3,18 +3,24 @@
 
 #include "ast.h"
 #include "symbol_table.h"
+#include "semantic_types.h"  // ÷—Ê—Ì ·«” Œœ«„ TypeInfo Ê DataType
 
 class SemanticAnalyzer {
 private:
     SymbolTable symbolTable;
     bool hasErrors;
 
+    // «· Õ·Ì· Õ”» ‰Ê⁄ «·⁄ﬁœ…
     void checkProgram(ASTNode* node);
     void checkDeclarations(ASTNode* node);
     void checkSubprogram(ASTNode* node);
     void checkStatements(ASTNode* node);
-    void checkExpression(ASTNode* node);
-    void checkTypeCompatibility(ASTNode* type1, ASTNode* type2);
+
+    // «· Õﬁﬁ „‰ «· ⁄»Ì—«  Ê√‰Ê«⁄ «·»Ì«‰« 
+    TypeInfo checkExpression(ASTNode* node);
+
+    // «· Õﬁﬁ „‰  Ê«›ﬁ «·√‰Ê«⁄
+    void checkTypeCompatibility(const TypeInfo& type1, const TypeInfo& type2);
 
 public:
     SemanticAnalyzer();

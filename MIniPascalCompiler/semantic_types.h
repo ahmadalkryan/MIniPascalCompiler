@@ -13,17 +13,32 @@ enum class DataType {
 
 struct TypeInfo {
     DataType baseType;
-    int arrayStart;
-    int arrayEnd;
+    union {
+        struct {
+            int arrayStart;
+            int arrayEnd;
+            DataType elementType; // Type of elements in the array
+        };
+    };
 
-    TypeInfo() : baseType(DataType::UNKNOWN), arrayStart(0), arrayEnd(0) {}
-    TypeInfo(DataType type) : baseType(type), arrayStart(0), arrayEnd(0) {}
-    TypeInfo(DataType type, int start, int end) : baseType(type), arrayStart(start), arrayEnd(end) {}
+    // Constructors
+    TypeInfo() : baseType(DataType::UNKNOWN), arrayStart(0), arrayEnd(0), elementType(DataType::UNKNOWN) {}
+    explicit TypeInfo(DataType type) : baseType(type), arrayStart(0), arrayEnd(0), elementType(DataType::UNKNOWN) {}
+    TypeInfo(DataType type, int start, int end, DataType elemType)
+        : baseType(type), arrayStart(start), arrayEnd(end), elementType(elemType) {
+    }
 
     bool operator==(const TypeInfo& other) const {
-        return baseType == other.baseType &&
-            arrayStart == other.arrayStart &&
-            arrayEnd == other.arrayEnd;
+        if (baseType != other.baseType)
+            return false;
+
+        if (baseType == DataType::ARRAY) {
+            return arrayStart == other.arrayStart &&
+                arrayEnd == other.arrayEnd &&
+                elementType == other.elementType;
+        }
+
+        return true;
     }
 
     std::string toString() const {
@@ -36,7 +51,7 @@ struct TypeInfo {
             return "boolean";
         case DataType::ARRAY:
             return "array[" + std::to_string(arrayStart) + ".." + std::to_string(arrayEnd) + "] of " +
-                TypeInfo(static_cast<DataType>(baseType)).toString(); //  ⁄œÌ· Â‰« ·≈ŸÂ«— ‰Ê⁄ «·⁄‰«’— ›Ì «·„’›Ê›…
+                TypeInfo(elementType).toString();
         default:
             return "unknown";
         }

@@ -134,6 +134,7 @@ win_bison -d -o "$(ProjectDir)minipascal.tab.cpp" "$(InputPath)"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ast.cpp" />
+    <ClCompile Include="code_generation.cpp" />
     <ClCompile Include="error_handler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="semantic_analyzer.cpp" />
@@ -148,6 +149,7 @@ win_bison -d -o "$(ProjectDir)minipascal.tab.cpp" "$(InputPath)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ast.h" />
+    <ClInclude Include="code_generation.h" />
     <ClInclude Include="error_handler.h" />
     <ClInclude Include="semantic_analyzer.h" />
     <ClInclude Include="semantic_types.h" />
