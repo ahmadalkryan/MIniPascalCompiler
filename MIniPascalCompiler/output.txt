@@ -1,0 +1,13 @@
+#pragma once
+Parsing test1.pas...
+
+Abstract Syntax Tree (AST):
+Program: HelloWorld
+    Declarations
+    SubprogramDeclarations
+    CompoundStatement
+        StatementList
+            ProcedureCall: writeln
+
+Performing semantic analysis...
+Semantic analysis completed successfully!
